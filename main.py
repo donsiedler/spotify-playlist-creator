@@ -5,6 +5,8 @@ import requests
 from bs4 import BeautifulSoup
 from spotipy.oauth2 import SpotifyOAuth
 
+from pprint import pprint
+
 SPOTIFY_CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
 SPOTIPY_REDIRECT_URI = os.environ.get("SPOTIPY_REDIRECT_URI")
@@ -39,8 +41,18 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_secret=SPOTIFY_CLIENT_SECRET,
     redirect_uri=SPOTIPY_REDIRECT_URI,
     scope=scope,
-    ))
+))
 
 user_id = sp.current_user().get("id")
 
+year = date.split("-")[0]
+
+for song in song_titles:
+    track_search = sp.search(
+        q=f"track: {song} year: {year}",
+        type="track",
+        limit=1,
+        market="PL",
+    )
+    print(track_search["tracks"]["items"][0]["uri"])
 
