@@ -22,6 +22,6 @@ website = response.text
 soup = BeautifulSoup(website, "html.parser")
 items = soup.select("li .o-chart-results-list__item h3")
 
-song_titles = [item.getText().replace("\n", "").replace("\t", "") for item in items]
+song_titles = [item.getText(strip=True) for item in items]
 print(song_titles)
 
