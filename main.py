@@ -18,7 +18,16 @@ while not date_valid:
 
     # Validate date
     if re.match(date_pattern, date):
-        date_valid = True
+        date_list = date.split("-")
+        year = int(date_list[0])
+        month = int(date_list[1])
+        day = int(date_list[2])
+
+        if year >= 1958 and month in range(1, 13) and day in range(1, 32):
+            date_valid = True
+        else:
+            print("Sorry, that didn't work. Make sure to input the date correctly!\n"
+                  "(should work from 1958-08-04 onwards)")
     else:
         print("Sorry, that didn't work. Make sure to use the correct date format!")
 
