@@ -29,10 +29,13 @@ response.raise_for_status()
 website = response.text
 
 soup = BeautifulSoup(website, "html.parser")
-items = soup.select("li .o-chart-results-list__item h3")
+song_items = soup.select("li.o-chart-results-list__item h3")
+artist_items = soup.select("span.c-label.a-no-trucate.a-font-primary-s")
 
-song_titles = [item.getText(strip=True) for item in items]
-print(song_titles)
+song_titles = [song_item.getText(strip=True) for song_item in song_items]
+artist_names = [artist_item.getText(strip=True) for artist_item in artist_items]
+
+tracks = (list(zip(artist_names, song_titles)))
 
 scope = "playlist-modify-private"
 
@@ -47,9 +50,9 @@ user_id = sp.current_user().get("id")
 
 year = date.split("-")[0]
 
-for song in song_titles:
+for artist, song in tracks:
     track_search = sp.search(
-        q=f"track: {song} year: {year}",
+        q=f"artist: {artist} track: {song} year: {year}",
         type="track",
         limit=1,
         market="PL",
