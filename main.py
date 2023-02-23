@@ -67,7 +67,6 @@ for artist, song in tracks:
     )
     URI = track_search["tracks"]["items"][0]["uri"]
     track_URIs.append(URI)
-    print(URI)
 
 print(track_URIs)
 
@@ -79,7 +78,6 @@ playlist = sp.user_playlist_create(
     public=False,
     description="Musical Time Machine")
 
-print(playlist)
 playlist_id = playlist["id"]
 
 # Add songs to the playlist
