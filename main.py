@@ -9,7 +9,7 @@ SPOTIFY_CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
 SPOTIPY_REDIRECT_URI = os.environ.get("SPOTIPY_REDIRECT_URI")
 
-date_pattern = "^\d{4}-\d{2}-\d{2}$"
+date_pattern = "^[1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]$"
 date_valid = None
 
 while not date_valid:
