@@ -44,12 +44,11 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     scope=scope,
 ))
 
-user_id = sp.current_user().get("id")
-
 year = date.split("-")[0]
 
 track_URIs = []
 
+# Search for track URIs
 for artist, song in tracks:
     track_search = sp.search(
         q=f"artist: {artist} track: {song} year: {year}",
@@ -59,6 +58,22 @@ for artist, song in tracks:
     )
     URI = track_search["tracks"]["items"][0]["uri"]
     track_URIs.append(URI)
+    print(URI)
 
 print(track_URIs)
 
+# Create Spotify playlist
+user_id = sp.current_user().get("id")
+playlist = sp.user_playlist_create(
+    user=user_id,
+    name=f"{date} Billboard 100",
+    public=False,
+    description="Musical Time Machine")
+
+print(playlist)
+playlist_id = playlist["id"]
+
+# Add songs to the playlist
+sp.playlist_add_items(playlist_id=playlist_id, items=track_URIs)
+
+print(playlist)
